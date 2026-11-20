@@ -1,0 +1,57 @@
+# Isolated local development & integration-test stack for WP Identity Guard (Free).
+# - Uses test-only credentials and synthetic fixtures only (never production data or live API keys).
+# - Binds HTTP solely to 127.0.0.1 (local loopback only) and does not expose MariaDB to the host.
+# - Uses locally cached images by default (wordpress:7.0.2-php8.3-apache, mariadb:10.11.18),
+#   satisfying confirmed D02 floors (PHP >= 8.3, WordPress >= 6.9).
+
+name: wpig-dev
+
+services:
+  db:
+    image: ${WPIG_DB_IMAGE:-mariadb:10.11.18}
+    restart: "no"
+    environment:
+      MARIADB_ROOT_PASSWORD: ${WPIG_DB_ROOT_PASSWORD:-wpig_local_root_test_only}
+      MARIADB_DATABASE: ${WPIG_DB_NAME:-wpig_test}
+      MARIADB_USER: ${WPIG_DB_USER:-wpig_test}
+      MARIADB_PASSWORD: ${WPIG_DB_PASSWORD:-wpig_local_user_test_only}
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - wpig_internal
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  wordpress:
+    image: ${WPIG_WP_IMAGE:-wordpress:7.0.2-php8.3-apache}
+    restart: "no"
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:${WPIG_HTTP_PORT:-8889}:80"
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_NAME: ${WPIG_DB_NAME:-wpig_test}
+      WORDPRESS_DB_USER: ${WPIG_DB_USER:-wpig_test}
+      WORDPRESS_DB_PASSWORD: ${WPIG_DB_PASSWORD:-wpig_local_user_test_only}
+      WORDPRESS_DEBUG: "1"
+      WORDPRESS_CONFIG_EXTRA: |
+        define( 'WPIG_TEST_MODE', true );
+        define( 'WPIG_BLOCK_EXTERNAL_HTTP', true );
+    volumes:
+      - wp_core:/var/www/html
+      - ./:/var/www/html/wp-content/plugins/wp-identity-guard
+    networks:
+      - wpig_internal
+
+networks:
+  wpig_internal:
+    driver: bridge
+
+volumes:
+  db_data:
+  wp_core:

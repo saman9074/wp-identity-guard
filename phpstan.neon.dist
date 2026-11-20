@@ -1,0 +1,10 @@
+# PHPStan configuration (requires `composer install`; extensions auto-registered
+# by phpstan/extension-installer, including szepeviktor/phpstan-wordpress).
+parameters:
+	level: 6
+	paths:
+		- wp-identity-guard.php
+		- uninstall.php
+		- src
+	tmpDir: .phpstan-cache
+	phpVersion: 80300

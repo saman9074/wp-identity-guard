@@ -1,0 +1,60 @@
+name: Bug Report
+description: Report a non-security defect in WP Identity Guard (Free)
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        > **Security & Privacy Notice:**
+        > - Do **not** report security vulnerabilities here. Use [GitHub Private Vulnerability Reporting](https://github.com/saman9074/wp-identity-guard/security/advisories/new) instead.
+        > - Do **not** include real national codes, mobile numbers, bank card numbers (PANs), birth dates, OTP codes, API keys, or encryption keys. Use clearly synthetic values only.
+  - type: input
+    id: plugin_version
+    attributes:
+      label: Plugin Version / Commit SHA
+      description: Which version or commit of WP Identity Guard are you using?
+      placeholder: "v0.1.0-alpha.1"
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment (PHP, WordPress, Database, OS)
+      description: Specify PHP version, WordPress version, MariaDB/MySQL version, and optional WooCommerce version.
+      placeholder: "PHP 8.3, WordPress 7.0.2, MariaDB 10.11.18"
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce (Synthetic Data Only)
+      description: Clear, minimal steps to reproduce the issue using synthetic data only.
+      placeholder: |
+        1. Activate plugin on a fresh WordPress install...
+        2. Navigate to WP Admin -> Identity Guard...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What did you expect to happen?
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: What actually happened? Redact any local filesystem paths or environment secrets.
+    validations:
+      required: true
+  - type: checkboxes
+    id: data_hygiene
+    attributes:
+      label: Data Hygiene Confirmation
+      options:
+        - label: I confirm that this report contains NO real PII, national codes, mobile numbers, bank card numbers, API keys, or cryptographic keys.
+          required: true
+        - label: I confirm that this is NOT a security vulnerability (security reports must be submitted privately via GitHub Security Advisories).
+          required: true

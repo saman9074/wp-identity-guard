@@ -1,0 +1,73 @@
+# ---------------------------------------------------------------
+# WP Identity Guard — repository ignore rules (security-first)
+# Never commit secrets, real PII, provider payloads or databases.
+# ---------------------------------------------------------------
+
+# Secrets / local configuration
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.crt
+*.p12
+*.pfx
+*.jks
+*.kdbx
+auth.json
+wp-config.php
+wp-config-local.php
+local-config.php
+secrets/
+*.secret
+*.secrets
+
+# Databases, dumps, logs (may contain PII)
+*.sql
+*.sql.gz
+*.sqlite
+*.sqlite3
+*.db
+*.dump
+*.log
+debug.log
+logs/
+
+# Captured provider traffic / live samples (forbidden in Git)
+*.har
+/tests/fixtures/live/
+/tests/fixtures/**/*.live.json
+/provider-captures/
+
+# Dependencies and build output
+/vendor/
+/node_modules/
+/build/
+/dist/
+/release/
+*.zip
+*.tar.gz
+
+# Test / tooling caches and reports
+/.phpunit.cache/
+/.phpunit.result.cache
+/.phpcs-cache
+/.phpstan-cache/
+/coverage/
+/playwright-report/
+/test-results/
+/tmp/
+
+# Local WordPress / Docker data
+/.wp-env/
+/wordpress/
+/docker/data/
+/docker-compose.override.yml
+
+# Editors / OS
+.idea/
+.vscode/
+*.swp
+*~
+.DS_Store
+Thumbs.db

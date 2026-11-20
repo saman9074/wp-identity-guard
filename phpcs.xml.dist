@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<ruleset name="WP Identity Guard">
+	<description>WordPress Coding Standards + PHP compatibility for WP Identity Guard (Free).</description>
+
+	<file>./wp-identity-guard.php</file>
+	<file>./uninstall.php</file>
+	<file>./src</file>
+	<file>./tests</file>
+
+	<exclude-pattern>/vendor/*</exclude-pattern>
+	<exclude-pattern>/node_modules/*</exclude-pattern>
+
+	<arg name="extensions" value="php"/>
+	<arg name="basepath" value="."/>
+	<arg name="parallel" value="8"/>
+	<arg name="cache" value=".phpcs-cache"/>
+	<arg value="sp"/>
+
+	<rule ref="WordPress-Extra"/>
+	<rule ref="WordPress-Docs"/>
+
+	<!-- Text domain and global prefix are fixed product decisions (docs/00-product-decisions.md). -->
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="wp-identity-guard"/>
+			</property>
+		</properties>
+	</rule>
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<property name="prefixes" type="array">
+				<element value="wpig"/>
+				<element value="WPIG"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- PSR-4 class files under src/ use PascalCase file names, not WP class-*.php names. -->
+	<rule ref="WordPress.Files.FileName">
+		<exclude-pattern>/src/*</exclude-pattern>
+		<exclude-pattern>/tests/*</exclude-pattern>
+	</rule>
+
+	<!-- Confirmed D02 support floors: PHP >= 8.3, WordPress >= 6.9. -->
+	<config name="testVersion" value="8.3-"/>
+	<rule ref="PHPCompatibilityWP"/>
+
+	<config name="minimum_wp_version" value="6.9"/>
+</ruleset>

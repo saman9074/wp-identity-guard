@@ -1,0 +1,42 @@
+name: Feature Request
+description: Propose an enhancement or architectural improvement for WP Identity Guard
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        > **Note:** WP Identity Guard `v0.1.0-alpha.1` implements the **P01 Foundation** only. Check the [README Roadmap](https://github.com/saman9074/wp-identity-guard#planned-features-roadmap) before opening a request for planned `P02`–`P05` features.
+  - type: dropdown
+    id: phase_area
+    attributes:
+      label: Target Area / Phase
+      options:
+        - "P01 Foundation (Schema, Crypto, Persistence, Auth, Admin, Audit, Privacy)"
+        - "P02 Identity Verification (OTP & Shahkar)"
+        - "P03 Bank Card Ownership Verification (C1)"
+        - "P04 UI Integrations (WP Profile, WooCommerce My Account, Shortcode, Block)"
+        - "P05 Release Hardening, Tooling & Documentation"
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement / Use Case
+      description: Describe the problem or requirement this feature addresses.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed Solution
+      description: Describe how the feature should work while preserving fail-closed security (`ADR-004`) and data minimization (`C1`/`I2`).
+    validations:
+      required: true
+  - type: checkboxes
+    id: data_hygiene
+    attributes:
+      label: Privacy & Scope Confirmation
+      options:
+        - label: I confirm that this proposal contains no real personal identifiable information (PII), card numbers, or credentials.
+          required: true

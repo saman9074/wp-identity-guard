@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	PHPUnit configuration (requires `composer install`).
+	- unit:        pure PHP tests, no WordPress, no network.
+	- integration: WordPress test library (wp-phpunit / WP_TESTS_DIR), selected in P01.
+	All suites must use fictitious fixtures only; live provider calls are forbidden.
+-->
+<phpunit
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+	bootstrap="tests/bootstrap.php"
+	colors="true"
+	beStrictAboutOutputDuringTests="true"
+	beStrictAboutTestsThatDoNotTestAnything="true"
+	failOnRisky="true"
+	failOnWarning="true"
+	cacheResultFile=".phpunit.cache/test-results"
+>
+	<testsuites>
+		<testsuite name="unit">
+			<directory suffix="Test.php">tests/Unit</directory>
+		</testsuite>
+		<testsuite name="security">
+			<directory suffix="Test.php">tests/Security</directory>
+		</testsuite>
+		<testsuite name="integration">
+			<directory suffix="Test.php">tests/Integration</directory>
+		</testsuite>
+		<testsuite name="compatibility">
+			<directory suffix="Test.php">tests/Compatibility</directory>
+		</testsuite>
+	</testsuites>
+
+	<coverage cacheDirectory=".phpunit.cache/code-coverage" processUncoveredFiles="false">
+		<include>
+			<directory suffix=".php">src</directory>
+		</include>
+	</coverage>
+
+	<php>
+		<env name="WPIG_TEST_MODE" value="1"/>
+		<!-- Guard: test code must never reach real provider hosts. -->
+		<env name="WPIG_BLOCK_EXTERNAL_HTTP" value="1"/>
+	</php>
+</phpunit>
